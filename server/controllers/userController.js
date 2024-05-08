@@ -32,4 +32,19 @@ const signupUser = async (req, res) => {
     }
 }
 
-module.exports = { signupUser, loginUser }
+const updateWallet = async (req, res) => {
+    const { wallet } = req.body
+    const user = req.user
+
+    try {
+        user.balance = Number(wallet);
+        await user.save()
+        res.status(200).json({ balance: user.balance })
+    }
+    catch (error) {
+        res.status(200).json({ error: error.message })
+    }
+}
+
+
+module.exports = { signupUser, loginUser, updateWallet }

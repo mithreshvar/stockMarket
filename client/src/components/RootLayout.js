@@ -58,9 +58,9 @@ function RootLayout() {
     }
 
     return (
-        <div className='h-screen w-screen overflow-x-auto flex p-[20px] bg-[#fbffd4] gap-x-[30px]'>
+        <div className='h-screen w-screen flex px-[20px] bg-[#fbffd4] gap-x-[30px]'>
             
-            <nav className='w-[280px] h-full px-[10px] flex flex-col justify-between text-[18px] rounded-[20px] py-[30px] gap-y-[10px] bg-white border border-[#ddddddbb] '>
+            <nav className='w-[280px] h-[calc(100%-40px)] px-[10px] flex flex-col justify-between text-[18px] rounded-[20px] my-[20px] py-[30px] gap-y-[10px] bg-white border border-[#ddddddbb] '>
                 <div className=' flex flex-col gap-y-[15px] items-center ' >
                     <div className='flex gap-x-[15px] items-center text-[22px]'>
                         <StoreIcon className="h-8 w-8" />
@@ -107,8 +107,10 @@ function RootLayout() {
 
                 <div className='px-[10px] py-[4px] text-center mx-[20px] bg-red-500 text-white font-semibold rounded-md cursor-pointer' onClick={handleLogout} >Log Out</div>
             </nav>
-            <div className='h-full w-full'>
-                <Outlet />
+            <div className='h-full w-[calc(100%-280px)] overflow-y-auto '>
+                <div className='py-[20px] h-full w-full'>
+                    <Outlet />
+                </div>
             </div>
 
             <Dialog

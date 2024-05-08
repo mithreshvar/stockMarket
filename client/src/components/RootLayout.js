@@ -69,7 +69,7 @@ function RootLayout() {
                     
                     <div className='border border-[#dddddd80] w-full rounded-full' />
 
-                    <div className='flex flex-col gap-x-[10px] items-center'>
+                    <div className='flex flex-col gap-y-[10px] items-center'>
                         <img src={'https://i.pinimg.com/236x/6b/c9/da/6bc9daa53be05654c3c2d8601d34d85a.jpg'} alt="profile" className='h-[150px] w-[150px] rounded-full' />
                         <div className='flex flex-col'>
                             <h3 className='text-[18px] font-semibold'>{user.name}</h3>
@@ -84,12 +84,12 @@ function RootLayout() {
 
                         <CircleFadingPlusIcon className='self-end mt-[-5px] mr-[-5px] text-[#000000] z-[1] cursor-pointer' onClick={() => setOpenChangeWallet(true)} />
                         <div className='z-[1]' >
-                            <h5 className='text-[14px]'>Portfolio balance</h5>
-                            <h3 className='text-[25px] ml-[15px] font-semibold'>₹ {user.balance}</h3>
+                            <h5 className='text-[13px]'>Portfolio balance</h5>
+                            <h3 className='text-[22px] ml-[15px] font-semibold'>₹ {user.balance}</h3>
                         </div>
                     </div>
 
-                    <div className=' w-full flex flex-col gap-y-[15px] p-[10px] '>
+                    <div className=' w-full flex flex-col gap-y-[15px] p-[10px] text-[17px]'>
                         <Link to='/' className='flex items-center gap-x-[10px]'>
                             <BiHomeHeart className='text-[24px]'/>Home
                         </Link>
@@ -116,15 +116,15 @@ function RootLayout() {
                 onClose={() => closeChangeWallet()}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
-                sx={{ '& .MuiDialog-paper': { borderRadius: '15px' } }}
+                sx={{ '& .MuiDialog-paper': { borderRadius: '15px' }, '& .MuiDialog-paperWidthSm': { minWidth: '600px'}}}
             >
                 <div className='bg-white flex flex-col p-[50px] px-[60px]'>
-                    <h1 className='text-[35px] font-semibold'>Change Wallet</h1>
+                    <h1 className='text-[35px] font-semibold mb-[5px]'>Change Wallet</h1>
                     <p className='pl-[5px]'>Change your wallet balance here</p>
 
                     <div className='flex flex-col gap-y-[30px] mt-[50px]'>
                         <input type="text" placeholder='Enter new wallet balance' className='border border-[#dddddd] p-[10px] rounded-md  min-w-[350px]' value={wallet} onChange={handleWallet} />
-                        <button className='bg-[#7140de] hover:bg-[#8451f5] text-white flex px-[30px] py-[10px] self-end rounded-md ' onClick={saveWalletChange}>Save</button>
+                        <button className='bg-[#7140de] hover:bg-[#8451f5] text-white flex px-[30px] py-[10px] self-end rounded-md font-medium ' onClick={saveWalletChange}>Save</button>
                     </div>
                 </div>
             </Dialog>

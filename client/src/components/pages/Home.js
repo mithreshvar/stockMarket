@@ -185,6 +185,20 @@ export default function Home() {
                                         ]
                                     } 
                                 />
+                                <div className="flex justify-evenly items-center text-[14px] pb-[10px]">
+                                    <div className="flex gap-x-[7px] items-center">
+                                        <div className="w-[15px] h-[15px] bg-[#7140de] rounded-full shrink-0"></div>
+                                        <p className="w-[50px] leading-[18px]">Mutual Funds</p>
+                                    </div>
+                                    <div className="flex gap-x-[7px] items-center">
+                                        <div className="w-[15px] h-[15px] bg-[#a8ff3d] rounded-full shrink-0"></div>
+                                        <p>Gold</p>
+                                    </div>
+                                    <div className="flex gap-x-[7px] items-center">
+                                        <div className="w-[15px] h-[15px] bg-[#CBD9D4] rounded-full shrink-0"></div>
+                                        <p>Stock</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </>

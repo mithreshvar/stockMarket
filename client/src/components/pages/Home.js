@@ -3,9 +3,13 @@ import { ArrowDown, ArrowUp, CirclePlus } from 'lucide-react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { getChange } from "./Market";
 import DoughnutChart from "../charts/DoughnutChart";
+import { useSelector } from "react-redux";
+import LineChart from "../charts/LineChart";
 
 
 export default function Home() {
+
+    const user = useSelector((state) => state.auth.user);
 
     const [watchlist, setWatchlist] = useState([
         {
@@ -76,8 +80,8 @@ export default function Home() {
 
                 <div className="border bg-[#3f3f3f60] w-[1px] rounded-full" />
 
-                <div>
-                    Graphuh  
+                <div className="w-[calc(100%-260px)]">
+                    <LineChart data={[100,255,321,234,362,221,124,321,452,122,421,25]} interval={5} />  
                 </div>    
             </div>
 
@@ -140,10 +144,30 @@ export default function Home() {
                                 totalName={"Total Asset"}
                                 data = {
                                     [
-                                        { name: "Mutual Funds", value: 3, color: "#7140de" },
-                                        { name: "Gold", value: 4, color: "#a8ff3d" },
-                                        { name: "Stock", value: 2, color: "#CBD9D4" }
-
+                                        { 
+                                            name: "Mutual Funds", 
+                                            value: user.portfolio.reduce( (acc, item) => { 
+                                                acc = item.type === 'Mutual Funds' ? acc + 1 : acc;
+                                                return acc;
+                                            }, 0),
+                                            color: "#7140de" 
+                                        },
+                                        { 
+                                            name: "Gold", 
+                                            value: user.portfolio.reduce( (acc, item) => { 
+                                                acc = item.type === 'Gold' ? acc + 1 : acc;
+                                                return acc;
+                                            }, 0),
+                                            color: "#a8ff3d" 
+                                        },
+                                        { 
+                                            name: "Stock", 
+                                            value: user.portfolio.reduce( (acc, item) => { 
+                                                acc = item.type === 'Stock' ? acc + 1 : acc;
+                                                return acc;
+                                            }, 0),
+                                            color: "#CBD9D4" 
+                                        },
                                     ]
                                 } 
                             />

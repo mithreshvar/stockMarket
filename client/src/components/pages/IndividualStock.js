@@ -5,6 +5,7 @@ import { bouncy } from 'ldrs';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuth } from '../../slices/authSlice';
 import { toast } from 'sonner';
+import LineChart from '../charts/LineChart';
 
 
 bouncy.register()
@@ -40,9 +41,17 @@ function IndividualStock() {
     });
     const data = await response.json();
 
+    if (data.error) {
+      toast.error(data.error);
+      console.log(data.error)
+      return;
+    }
+
+    setQuantity('');
     const updatedUser = {...user};
     updatedUser.balance = data.user.balance;
-    updatedUser.portfolio = data.user.portfolio;
+    updatedUser.portfolio = data.user.portfolio; 
+    toast.success('Stock bought successfully');
 
     dispatch(setAuth(updatedUser));
     setCurrentStock(data.stock);
@@ -75,6 +84,7 @@ function IndividualStock() {
     const updatedUser = {...user};
     updatedUser.balance = data.user.balance;
     updatedUser.portfolio = data.user.portfolio;
+    toast.success('Stock sold successfully');
 
     dispatch(setAuth(updatedUser));
     setCurrentStock(data.stock);
@@ -124,10 +134,8 @@ function IndividualStock() {
             })()
           }
 
-          <div>
-            {
-              currentStock.price
-            }
+          <div className='h-full flex justify-center items-center'>
+            <LineChart data={currentStock.price} interval={3} />
           </div>
         </div>
 
@@ -151,7 +159,7 @@ function IndividualStock() {
                 (currentActive === 'Buy') ?
                   <button className='w-full bg-[#008854] text-white rounded-[5px] p-[5px]' onClick={handleBuy}>Buy</button>
                 :
-                  <button className='w-full bg-[#008854] text-white rounded-[5px] p-[5px]' onClick={handleSell}>Sell</button>
+                  <button className='w-full bg-[#FF5349] text-white rounded-[5px] p-[5px]' onClick={handleSell}>Sell</button>
               }
             </div>
 

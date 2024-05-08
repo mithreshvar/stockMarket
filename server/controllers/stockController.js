@@ -99,7 +99,8 @@ const buyStock = async (req, res) => {
         const newPortfolioItem = {
             stock: stock._id,
             quantity: quantity,
-            price: price
+            price: price,
+            type: stock.type
         }
         let index = user.portfolio.findIndex(item => item.stock == stockid);
         if (index !== -1) {

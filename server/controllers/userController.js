@@ -46,5 +46,10 @@ const updateWallet = async (req, res) => {
     }
 }
 
+const reAuth = async (req, res) => {
+    const user = req.user
+    res.status(200).json({ balance: user.balance, email: user.email, name: user.name, portfolio: user.portfolio, watchlist: user.watchlist })
+}
 
-module.exports = { signupUser, loginUser, updateWallet }
+
+module.exports = { signupUser, loginUser, updateWallet, reAuth }

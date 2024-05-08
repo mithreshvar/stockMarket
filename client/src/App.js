@@ -49,12 +49,36 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const userFromLS = JSON.parse(localStorage.getItem('user'));
 
-    if (userFromLS && !user) {
-      dispatch(setAuth(userFromLS));
-    }
-  },[dispatch, user]);
+    (async function () {
+
+      const userFromLS = JSON.parse(localStorage.getItem('user'));
+
+      const response = await fetch(process.env.REACT_APP_BACKEND_URL+'/api/user/reauth', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application',
+          'Authorization': `Bearer ${userFromLS.token}`
+        }
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        localStorage.removeItem('user');
+        dispatch(setAuth(null));
+      }
+      else{
+        dispatch(setAuth(data));
+      }
+  
+      // if (userFromLS && !user) {
+      //   dispatch(setAuth(userFromLS));
+      // }
+
+    })()
+
+  },[dispatch]);
 
   return (
     <RouterProvider router={router} />

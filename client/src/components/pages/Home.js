@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ArrowDown, ArrowUp, CirclePlus } from 'lucide-react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { getChange } from "./Market";
+import DoughnutChart from "../charts/DoughnutChart";
 
 
 export default function Home() {
@@ -132,8 +133,21 @@ export default function Home() {
                         </Table>
                     </TableContainer>
 
-                    <div className="border border-[#3f3f3f60] rounded-[20px]">
-                        chart comming soon  
+                    <div className=" flex flex-col gap-y-[15px] w-[300px]">
+                        <h3 className="text-[18px] font-semibold pl-[10px]">Asset Allocation</h3>
+                        <div className="border border-[#3f3f3f60] rounded-[20px] " >
+                            <DoughnutChart
+                                totalName={"Total Asset"}
+                                data = {
+                                    [
+                                        { name: "Mutual Funds", value: 3, color: "#7140de" },
+                                        { name: "Gold", value: 4, color: "#a8ff3d" },
+                                        { name: "Stock", value: 2, color: "#CBD9D4" }
+
+                                    ]
+                                } 
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

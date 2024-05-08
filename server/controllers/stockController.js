@@ -140,6 +140,9 @@ const sellStock = async (req, res) => {
 
         stock.shareAmount += Number(quantity);
         user.balance += quantity*price;
+        user.portfolio[user.portfolio.findIndex(item => item.stock == stockid)].quantity -= quantity;
+        user.portfolio[user.portfolio.findIndex(item => item.stock == stockid)].price -= price;
+        user.portfolio = user.portfolio.filter(item => item.quantity > 0);
 
         await stock.save();
         await user.save();

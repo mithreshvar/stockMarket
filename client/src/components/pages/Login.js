@@ -98,7 +98,7 @@ function Login() {
         <div className='h-screen w-screen flex items-center justify-center bg-[#fbffd4] relative '>
             {
                 backendIsStarting &&
-                <div className='absolute flex justify-center items-center font-medium gap-x-[10px] bottom-[50px] right-[30px] bg-white rounded-[10px] shadow-[10px_10px_20px_0px_#000000dd] px-[30px] p-[15px] '>
+                <div className='absolute flex justify-center items-center font-medium gap-x-[10px] top-[40px] right-[30px] bg-white rounded-[10px] shadow-[10px_10px_20px_0px_#000000dd] px-[30px] p-[15px] '>
 
                     <l-helix
                         size="45"

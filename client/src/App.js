@@ -54,6 +54,10 @@ function App() {
 
       const userFromLS = JSON.parse(localStorage.getItem('user'));
 
+      if (!userFromLS) {
+        return;
+      }
+      
       const response = await fetch(process.env.REACT_APP_BACKEND_URL+'/api/user/reauth', {
         method: 'GET',
         headers: {

@@ -1,9 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { setAuth } from '../../slices/authSlice';
 import StoreIcon from '../../Icons/StoreIcon';
 import { TbEyeClosed, TbEye   } from "react-icons/tb";
 import { toast, Toaster } from 'sonner';
+
+import { dotSpinner, helix } from 'ldrs'
+
+dotSpinner.register()
+helix.register()
 
 function Login() {
 
@@ -11,6 +16,8 @@ function Login() {
 
     const [viewPassword, setViewPassword] = useState(false)
     const [activePage, setActivePage] = useState('Log in'); 
+    const [loading, setLoading] = useState(false);
+    const [backendIsStarting, setBackendIsStarting] = useState(false);  // for render backend to spin up as it is in free tier
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('');
@@ -18,6 +25,12 @@ function Login() {
     const [confirmPassword, setConfirmPassword] = useState('')
 
     const handleLogin = async () => {
+
+        setLoading(true);
+        setTimeout(() => {
+            setBackendIsStarting(true);
+        }, 10000)
+
         const response = await fetch(process.env.REACT_APP_BACKEND_URL+"/api/user/login", {
             method: 'POST',
             headers: {
@@ -36,6 +49,9 @@ function Login() {
             localStorage.setItem('user', JSON.stringify(data));
             dispatch(setAuth(data));
         }
+
+        setBackendIsStarting(false);
+        setLoading(false);
     }
 
     const handleSignup = async () => {
@@ -43,6 +59,11 @@ function Login() {
             toast.error("Passwords do not match")
             return;
         }
+
+        setLoading(true);
+        setTimeout(() => {
+            setBackendIsStarting(true);
+        }, 10000)
 
         const response = await fetch(process.env.REACT_APP_BACKEND_URL+"/api/user/signup", {
             method: 'POST',
@@ -62,10 +83,35 @@ function Login() {
             localStorage.setItem('user', JSON.stringify(data));
             dispatch(setAuth(data));
         }
+        
+        setBackendIsStarting(false);
+        setLoading(false);
     }
 
+    useEffect(() => {
+        if (!loading && backendIsStarting) {
+            setBackendIsStarting(false);
+        }
+    }, [loading, backendIsStarting])
+
     return (
-        <div className='h-screen w-screen flex items-center justify-center bg-[#fbffd4]'>
+        <div className='h-screen w-screen flex items-center justify-center bg-[#fbffd4] relative '>
+            {
+                backendIsStarting &&
+                <div className='absolute flex justify-center items-center font-medium gap-x-[10px] bottom-[50px] right-[30px] bg-white rounded-[10px] shadow-[10px_10px_20px_0px_#000000dd] px-[30px] p-[15px] '>
+
+                    <l-helix
+                        size="45"
+                        speed="2.5" 
+                        color="black"
+                    ></l-helix>
+                    <div className='flex flex-col text-[#545454]'>
+                        <p>Backend is starting up.</p>
+                        <p>Please wait...</p>
+                    </div>
+                </div>
+            }
+
             <div className='flex flex-col gap-y-[30px]'>
                 <h1 className='flex gap-x-[15px] items-center justify-center text-[22px]'>
                     <StoreIcon className="h-[60px] w-[60px]" />
@@ -129,7 +175,20 @@ function Login() {
                         }
                     </div>
 
-                    <button onClick={ activePage==='Log in' ? handleLogin : handleSignup} className='bg-[#24855B] hover:bg-[#2da671] w-fit px-[50px] self-end p-[8px] rounded-[10px] mt-[30px] text-white font-bold text-[20px] '>Next</button>
+                    <button onClick={ activePage==='Log in' ? handleLogin : handleSignup} className='w-[155px] bg-[#24855B] hover:bg-[#2da671] disabled:bg-[#51645c] disabled:opacity-80 px-[20px] self-end p-[8px] rounded-[10px] mt-[30px] text-white font-bold text-[20px] ' disabled={loading}>
+                        { loading ? 
+                            <div className='flex gap-x-[10px] justify-center items-center'>
+                                <p >Loading</p>
+                                <l-dot-spinner
+                                    size="22"
+                                    speed="1" 
+                                    color="white" 
+                                ></l-dot-spinner>
+                            </div> 
+                            :
+                            'Next'
+                        }
+                    </button>
                 </div>
             </div>
             <div className='w-0'>

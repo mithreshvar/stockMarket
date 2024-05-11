@@ -29,7 +29,7 @@ function Login() {
         setLoading(true);
         setTimeout(() => {
             setBackendIsStarting(true);
-        }, 10000)
+        }, 4000)
 
         const response = await fetch(process.env.REACT_APP_BACKEND_URL+"/api/user/login", {
             method: 'POST',
@@ -63,7 +63,7 @@ function Login() {
         setLoading(true);
         setTimeout(() => {
             setBackendIsStarting(true);
-        }, 10000)
+        }, 4000)
 
         const response = await fetch(process.env.REACT_APP_BACKEND_URL+"/api/user/signup", {
             method: 'POST',
